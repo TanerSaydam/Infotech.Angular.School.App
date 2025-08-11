@@ -3,14 +3,20 @@ import { BreadcrumbService } from '../../services/breadcrumb';
 
 @Component({
   imports: [],
-  templateUrl: './home.html',
+  templateUrl: './students.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class Home {
-  readonly breadcrumb = inject(BreadcrumbService);
+export default class Students {
+  readonly #breadcrumb = inject(BreadcrumbService);
 
   constructor(){
-    this.breadcrumb.reset();
+    this.#breadcrumb.first(
+      {
+        name: 'Öğrenciler',
+        icon: 'bi-people',
+        route: '/students'
+      }
+    )
   }
 }

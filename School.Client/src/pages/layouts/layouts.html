@@ -4,48 +4,18 @@
         <h4><i class="bi bi-mortarboard me-2"></i>EduPanel</h4>
     </div>
     <ul class="nav flex-column sidebar-nav">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">
-                <i class="bi bi-house"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bi bi-people"></i>
-                <span>Öğrenciler</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bi bi-person-badge"></i>
-                <span>Öğretmenler</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bi bi-book"></i>
-                <span>Dersler</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bi bi-calendar3"></i>
-                <span>Sınıflar</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bi bi-bar-chart"></i>
-                <span>Raporlar</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="bi bi-gear"></i>
-                <span>Ayarlar</span>
-            </a>
-        </li>
+        @for(nav of navs(); track nav.route){
+            <li class="nav-item">
+                <a
+                  class="nav-link"
+                  [routerLink]="nav.route"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact:nav.route === '/'}">
+                    <i class="bi" [ngClass]="nav.icon"></i>
+                    <span>{{nav.name}}</span>
+                </a>
+            </li>
+        }
     </ul>
 </nav>
 
@@ -56,10 +26,7 @@
         <div class="container-fluid">
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="#">Ana Sayfa</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
+                <breadcrumb />
             </nav>
 
             <!-- User Profile Dropdown -->
