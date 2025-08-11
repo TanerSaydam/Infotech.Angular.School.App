@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - Öğrenci Kayıt Sistemi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body class="login-page">
+    <div class="container-fluid vh-100">
+        <div class="row h-100">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="login-panel">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-mortarboard text-primary mb-3" style="font-size: 3rem;"></i>
+                        <h3 class="fw-bold text-dark">EduPanel</h3>
+                        <p class="text-muted">Öğrenci Kayıt Sistemi</p>
+                    </div>
+
+                    <form>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="username" placeholder="Kullanıcı adınızı girin">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="password" placeholder="Şifrenizi girin">
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">
+                                Beni hatırla
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">Giriş Yap</button>
+
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none small">Şifrenizi mi unuttunuz?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
