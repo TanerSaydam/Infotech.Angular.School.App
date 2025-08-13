@@ -8,7 +8,7 @@ export interface Student{
     phoneNumber: string;
 }
 
-export const initializeStudent : Student = {
+export const initialStudent : Student = {
     id: '',
     imageUrl: '',
     firstName: '',

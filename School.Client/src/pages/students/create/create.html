@@ -1,1 +1,56 @@
-<p>create works!</p>
+<div class="row">
+    <div class="col-md-4 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>
+                    <i class="bi bi-plus"></i>
+                    Öğrenci Ekleme Formu
+                </h3>
+            </div>
+            <div class="card-body">
+                <form #form="ngForm" autocomplete="off" (ngSubmit)="save(form)">
+                    <div class="form-group">
+                        <label>Resim</label>
+                        <input type="file" ngModel name="file" class="form-control" (change)="getFile($event)">
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label>Adı</label>
+                        <input type="text" [(ngModel)]="data().firstName" name="firstName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label>Soyadı</label>
+                        <input type="text" [(ngModel)]="data().lastName" name="lastName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label>TC No</label>
+                        <input class="form-control" [(ngModel)]="data().identityNumber" name="identityNumber" required minlength="11" maxlength="11">
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label>Mail Adresi</label>
+                        <input type="email" [(ngModel)]="data().email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label>Telefon Numarası</label>
+                        <input type="tel" [(ngModel)]="data().phoneNumber" name="phoneNumber" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mt-2 d-flex justify-content-between">
+                        <button type="button" class="btn btn-danger" (click)="cancel()">
+                            <i class="fa fa-x"></i>
+                            Vazgeç
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save"></i>
+                            Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
