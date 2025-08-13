@@ -17,12 +17,17 @@ export class BreadcrumbService {
     ]);
   }
 
-  update(nav: Navigation){
+  update(name: string, icon: string, route: string){
+    const nav: Navigation = {
+      name: name,
+      icon: icon,
+      route: route
+    }
     this.navs.update(prev => [...prev, nav]);
   }
 
-  first(nav: Navigation){
+  first(name: string, icon: string, route: string){
     this.reset();
-    this.update(nav);
+    this.update(name, icon, route);
   }
 }

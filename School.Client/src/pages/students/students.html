@@ -13,10 +13,10 @@
         <div class="col-md-3 col-12">
             <div class="card" style="height: 650px;">
                 <div class="card-header d-flex justify-content-center gap-1">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" title="Güncelle" [routerLink]="['edit', val.id]">
                         <i class="bi bi-pen"></i>
                     </button>
-                    <button class="btn btn-danger">
+                    <button class="btn btn-danger" title="Sil">
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>

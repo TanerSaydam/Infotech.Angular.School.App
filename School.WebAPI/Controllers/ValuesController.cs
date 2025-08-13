@@ -7,36 +7,17 @@ using School.WebAPI.Models;
 using TS.Result;
 
 namespace School.WebAPI.Controllers;
-
+[Route("api/[controller]")]
 [ApiController]
-[Route("/students")]
-public sealed class StudentsController(ApplicationDbContext dbContext) : ControllerBase
+public class ValuesController(ApplicationDbContext dbContext) : ControllerBase
 {
-    [HttpPost]
-    public async Task<Result<string>> Create([FromForm] CreateStudentDto request, CancellationToken cancellationToken)
-    {
-        var fileName = DateTime.Now.ToFileTime() + "_" + request.File.FileName;
-        using (var stream = new FileStream($"wwwroot/{fileName}", FileMode.Create))
-        {
-            request.File.CopyTo(stream);
-        }
-
-        Student student = request.Adapt<Student>();
-        student.ImageUrl = fileName;
-        dbContext.Add(student);
-        await dbContext.SaveChangesAsync(cancellationToken);
-
-        return Result<string>.Succeed("Öğrenci başarıyla kaydedildi");
-    }
-
-
     [HttpPut]
     public async Task<IActionResult> Update([FromForm] UpdateStudentDto request, CancellationToken cancellationToken)
     {
         Student? student = await dbContext.Students.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
         if (student is null)
         {
-            return StatusCode(400, Result<string>.Failure("Öğrenci bulunamadı"));
+            return NotFound(Result<string>.Failure("Öğrenci bulunamadı"));
         }
 
         string? fileName = null;

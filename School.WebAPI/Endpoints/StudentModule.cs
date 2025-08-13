@@ -22,6 +22,14 @@ public sealed class StudentModule : IEndpoint
         })
         .Produces<List<Student>>();
 
+        app.MapGet("{id}",
+            async (Guid id, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
+            {
+                var res = await dbContext.Students.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+                return res;
+            })
+        .Produces<Student>();
+
         app.MapDelete("{id}",
             async (Guid id, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
         {

@@ -23,12 +23,6 @@ export default class Students {
 
   //metotlar
   constructor(){
-    this.#breadcrumb.first(
-      {
-        name: 'Öğrenciler',
-        icon: 'bi-people',
-        route: '/students'
-      }
-    )
+    this.#breadcrumb.first('Öğrenciler', 'bi-people', '/students')
   }
 }

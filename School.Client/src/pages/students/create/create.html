@@ -3,8 +3,8 @@
         <div class="card">
             <div class="card-header">
                 <h3>
-                    <i class="bi bi-plus"></i>
-                    Öğrenci Ekleme Formu
+                    <i class="bi" [ngClass]="cardIcon()"></i>
+                    {{cardTitle()}}
                 </h3>
             </div>
             <div class="card-body">
@@ -40,13 +40,13 @@
                     </div>
 
                     <div class="form-group mt-2 d-flex justify-content-between">
-                        <button type="button" class="btn btn-danger" (click)="cancel()">
+                        <button type="button" class="btn btn-secondary" (click)="cancel()">
                             <i class="fa fa-x"></i>
                             Vazgeç
                         </button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-save"></i>
-                            Kaydet
+                            <i class="bi" [ngClass]="btnIcon()"></i>
+                            {{btnName()}}
                         </button>
                     </div>
                 </form>
