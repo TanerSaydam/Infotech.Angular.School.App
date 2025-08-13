@@ -15,7 +15,7 @@ export const routes: Routes = [
             },
             {
                 path: 'students',
-                loadComponent: () => import('./pages/students/students')
+                loadChildren: () => import('./pages/students/router')
             }
         ]
     }
