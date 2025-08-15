@@ -1,6 +1,6 @@
 <title>EduPanel | Öğrenciler</title>
 <div class="row">
-    <div class="col-md-3 col-12">
+    <div class="col-md-3 col-12 mt-2">
         <div class="card">
             <div class="card-header w-100 d-flex justify-content-center align-items-center" style="height: 650px;">
                 <button class="btn btn-secondary" style="width: 100px; height: 100px;" routerLink="create">
@@ -9,14 +9,35 @@
             </div>
         </div>
     </div>
+    @if(loading()){
+        @for(val of loadingList(); track val){
+            <div class="col-md-3 col-12 mt-2">
+                <div class="card" style="height: 650px;">
+                    <div class="placeholder-glow card-header d-flex justify-content-center gap-1">
+                        <div style="width: 35px; height: 35px; border-radius: 5px;" class="placeholder"></div>
+                        <div style="width: 35px; height: 35px; border-radius: 5px;" class="placeholder"></div>
+                    </div>
+                    <div class="placeholder-glow card-body d-flex w-100 justify-content-center align-items-center">
+                        <img class="placeholder" style="width: 400px; height: 400px; object-fit: cover; border-radius: 400px;" >
+                    </div>
+                    <div class="placeholder-glow card-header d-flex flex-column w-100 justify-content-center align-items-center">
+                        <h2 class="placeholder col-5"></h2>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-3 mt-1"></span>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
     @for(val of data(); track val.id){
-        <div class="col-md-3 col-12">
+        <div class="col-md-3 col-12 mt-2">
             <div class="card" style="height: 650px;">
                 <div class="card-header d-flex justify-content-center gap-1">
                     <button class="btn btn-primary" title="Güncelle" [routerLink]="['edit', val.id]">
                         <i class="bi bi-pen"></i>
                     </button>
-                    <button class="btn btn-danger" title="Sil">
+                    <button class="btn btn-danger" title="Sil" (click)="delete(val)">
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
@@ -27,7 +48,7 @@
                 </div>
                 <div class="card-header d-flex flex-column w-100 justify-content-center align-items-center">
                     <h2>{{val.firstName}} {{val.lastName}}</h2>
-                    <span>{{val.phoneNumber}}</span>
+                    <span>+90{{val.phoneNumber | mask:'(000) 000 00 00'}}</span>
                     <span>{{val.email}}</span>
                 </div>
             </div>

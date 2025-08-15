@@ -263,3 +263,8 @@ body.login-page {
         padding: 30px 25px;
     }
 }
+
+.preview-image:hover{
+    opacity: 0.5;
+    cursor: pointer;
+}

@@ -25,6 +25,7 @@ public sealed class StudentModule : IEndpoint
         app.MapGet("{id}",
             async (Guid id, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
             {
+                await Task.Delay(5000);
                 var res = await dbContext.Students.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
                 return res;
             })

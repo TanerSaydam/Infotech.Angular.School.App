@@ -4,42 +4,63 @@
             <div class="card-header">
                 <h3>
                     <i class="bi" [ngClass]="cardIcon()"></i>
-                    {{cardTitle()}}
+                    21:25 görüşelim
+                    <!-- {{cardTitle()}} -->
                 </h3>
             </div>
             <div class="card-body">
+
                 <form #form="ngForm" autocomplete="off" (ngSubmit)="save(form)">
-                    <div class="form-group">
-                        <label>Resim</label>
-                        <input type="file" ngModel name="file" class="form-control" (change)="getFile($event)">
+                    <input #fileInput type="file" ngModel name="file" style="display: none;" class="form-control" (change)="getFile($event)">
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group" style="border: 1px solid #ccc; border-radius: 10px;">
+                                <img class="preview-image" [src]="previewImage()" style="width: 200px; height: 200px;" alt="Resim bulunamadı" (click)="fileInput.click()" />
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label>Adı</label>
+                                <input type="text" [(ngModel)]="data().firstName" name="firstName" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <label>Soyadı</label>
+                                <input type="text" [(ngModel)]="data().lastName" name="lastName" class="form-control" required>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <label>TC No</label>
+                                <input class="form-control" [(ngModel)]="data().identityNumber" name="identityNumber" required minlength="11" maxlength="11">
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group mt-2">
-                        <label>Adı</label>
-                        <input type="text" [(ngModel)]="data().firstName" name="firstName" class="form-control" required>
+                    <div class="row form-group mt-4">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Mail Adresi</label>
+                                <input type="email" [(ngModel)]="data().email" name="email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Telefon Numarası</label>
+                                <input
+                                  type="tel"
+                                  [(ngModel)]="data().phoneNumber"
+                                  name="phoneNumber"
+                                  class="form-control"
+                                  required
+                                  prefix="+90"
+                                  mask="(000) 000 00 00">
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group mt-2">
-                        <label>Soyadı</label>
-                        <input type="text" [(ngModel)]="data().lastName" name="lastName" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label>TC No</label>
-                        <input class="form-control" [(ngModel)]="data().identityNumber" name="identityNumber" required minlength="11" maxlength="11">
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label>Mail Adresi</label>
-                        <input type="email" [(ngModel)]="data().email" name="email" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2">
-                        <label>Telefon Numarası</label>
-                        <input type="tel" [(ngModel)]="data().phoneNumber" name="phoneNumber" class="form-control" required>
-                    </div>
-
-                    <div class="form-group mt-2 d-flex justify-content-between">
+                    <hr>
+                    <div class="form-group mt-4 d-flex justify-content-between">
                         <button type="button" class="btn btn-secondary" (click)="cancel()">
                             <i class="fa fa-x"></i>
                             Vazgeç
