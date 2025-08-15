@@ -1,14 +1,5 @@
 <title>EduPanel | Öğrenciler</title>
 <div class="row">
-    <div class="col-md-3 col-12 mt-2">
-        <div class="card">
-            <div class="card-header w-100 d-flex justify-content-center align-items-center" style="height: 650px;">
-                <button class="btn btn-secondary" style="width: 100px; height: 100px;" routerLink="create">
-                    <i class="bi bi-plus" style="font-size: 60px;"></i>
-                </button>
-            </div>
-        </div>
-    </div>
     @if(loading()){
         @for(val of loadingList(); track val){
             <div class="col-md-3 col-12 mt-2">
@@ -28,6 +19,16 @@
                 </div>
             </div>
         }
+    }@else {
+        <div class="col-md-3 col-12 mt-2">
+            <div class="card">
+                <div class="card-header w-100 d-flex justify-content-center align-items-center" style="height: 650px;">
+                    <button class="btn btn-secondary" style="width: 100px; height: 100px;" routerLink="create">
+                        <i class="bi bi-plus" style="font-size: 60px;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     }
 
     @for(val of data(); track val.id){

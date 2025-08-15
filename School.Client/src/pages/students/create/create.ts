@@ -9,9 +9,10 @@ import { lastValueFrom } from 'rxjs';
 import { NgxMaskDirective } from 'ngx-mask';
 import { imageMainUrl } from '../../../contants';
 import { FlexiToastService } from 'flexi-toast';
+import Loading from '../../../components/loading/loading';
 
 @Component({
-  imports: [FormsModule, NgClass, NgxMaskDirective],
+  imports: [FormsModule, NgClass, NgxMaskDirective, Loading],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

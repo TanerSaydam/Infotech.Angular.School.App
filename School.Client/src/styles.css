@@ -264,7 +264,119 @@ body.login-page {
     }
 }
 
-.preview-image:hover{
+.preview-image:hover {
     opacity: 0.5;
     cursor: pointer;
+}
+
+.card{
+    position: relative;
+}
+
+/* Overlay (blur katmanı) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+
+/* Spinner container */
+.spinner-container {
+    text-align: center;
+    z-index: 3;
+}
+
+/* Ana spinner */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* İç spinner (isteğe bağlı) */
+.spinner-inner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid transparent;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: spin-reverse 0.8s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Yükleme metni */
+.loading-text {
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Animasyonlar */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin-reverse {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+    .spinner {
+        width: 50px;
+        height: 50px;
+    }
+
+    .spinner-inner {
+        width: 35px;
+        height: 35px;
+    }
+
+    .loading-text {
+        font-size: 14px;
+    }
 }

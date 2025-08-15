@@ -25,7 +25,6 @@ public sealed class StudentModule : IEndpoint
         app.MapGet("{id}",
             async (Guid id, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
             {
-                await Task.Delay(5000);
                 var res = await dbContext.Students.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
                 return res;
             })
@@ -37,12 +36,14 @@ public sealed class StudentModule : IEndpoint
             var student = await dbContext.Students.FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
             if (student is null)
             {
-                return Result<string>.Failure("Öğrenci bulunamadı");
+                return Results.NotFound(Result<string>.Failure("Öğrenci bulunamadı"));
             }
 
-            dbContext.Remove(student);
-            await dbContext.SaveChangesAsync(cancellationToken);
-            return Result<string>.Succeed("Öğrenci başarıyla silindi");
+            return Results.NotFound(Result<string>.Failure("Öğrenci bulunamadı"));
+
+            //dbContext.Remove(student);
+            //await dbContext.SaveChangesAsync(cancellationToken);
+            //return Result<string>.Succeed("Öğrenci başarıyla silindi");
         })
         .Produces<Result<string>>();
     }

@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, linkedSignal, signal, viewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
 import { BreadcrumbService } from '../../services/breadcrumb';
-import { HttpClient, HttpErrorResponse, httpResource } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import { Student } from '../../models/student';
 import { imageMainUrl } from '../../contants';
 import { RouterLink } from '@angular/router';
 import { NgxMaskPipe } from 'ngx-mask';
 import { FlexiToastService } from 'flexi-toast';
+import { HttpService } from '../../services/http';
 
 @Component({
   imports: [RouterLink, NgxMaskPipe],
@@ -19,11 +20,11 @@ export default class Students {
   readonly data = computed(() => this.result.value() ?? []);
   readonly loading = linkedSignal(() => this.result.isLoading());
   readonly imageMainUrl = signal<string>(imageMainUrl);
-  readonly loadingList = signal<number[]>([1,2,3]);
+  readonly loadingList = signal<number[]>([1,2,3,4,5,6,7,8]);
 
   //servisler
   readonly #breadcrumb = inject(BreadcrumbService);
-  readonly #http = inject(HttpClient);
+  readonly #http = inject(HttpService);
   readonly #toast = inject(FlexiToastService);
 
   //metotlar
@@ -35,16 +36,10 @@ export default class Students {
     const question = `Öğrenci ${val.firstName} ${val.lastName} silmek istiyor musunuz?`;
     this.#toast.showSwal("Öğrenci Sil?", question, "Sil", () => {
       this.loading.set(true);
-      this.#http.delete(`/sc/students/${val.id}`).subscribe({
-        next: (res) => {
-          this.result.reload();
-          this.loading.set(false);
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log(err);
-          this.loading.set(false);
-        }
-      });
-    })
+      this.#http.delete(`/sc/students/${val.id}`,() => {
+        this.result.reload();
+        this.loading.set(false);
+      },() => this.loading.set(false));
+    });
   }
 }
