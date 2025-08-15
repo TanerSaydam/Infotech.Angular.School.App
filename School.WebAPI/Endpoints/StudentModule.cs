@@ -13,10 +13,12 @@ public sealed class StudentModule : IEndpoint
         var app = builder.MapGroup("/students").WithTags("Students");
 
         app.MapGet(string.Empty,
-            async (ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
+            async (int pageNumer, int pageSize, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
         {
             var res = await dbContext.Students
                         .OrderBy(p => p.FirstName)
+                        .Skip(pageNumer - 1)
+                        .Take(pageSize)
                         .ToListAsync(cancellationToken);
             return res;
         })
@@ -39,11 +41,9 @@ public sealed class StudentModule : IEndpoint
                 return Results.NotFound(Result<string>.Failure("Öğrenci bulunamadı"));
             }
 
-            return Results.NotFound(Result<string>.Failure("Öğrenci bulunamadı"));
-
-            //dbContext.Remove(student);
-            //await dbContext.SaveChangesAsync(cancellationToken);
-            //return Result<string>.Succeed("Öğrenci başarıyla silindi");
+            dbContext.Remove(student);
+            await dbContext.SaveChangesAsync(cancellationToken);
+            return Results.Ok(Result<string>.Succeed("Öğrenci başarıyla silindi"));
         })
         .Produces<Result<string>>();
     }

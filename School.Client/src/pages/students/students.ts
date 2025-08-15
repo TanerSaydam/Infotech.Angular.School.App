@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
 import { BreadcrumbService } from '../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
 import { Student } from '../../models/student';
@@ -7,17 +7,21 @@ import { RouterLink } from '@angular/router';
 import { NgxMaskPipe } from 'ngx-mask';
 import { FlexiToastService } from 'flexi-toast';
 import { HttpService } from '../../services/http';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 
 @Component({
-  imports: [RouterLink, NgxMaskPipe],
+  imports: [RouterLink, NgxMaskPipe, InfiniteScrollDirective],
   templateUrl: './students.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class Students {
   //değişkenler
-  readonly result = httpResource<Student[]>(() => `/sc/students`);
-  readonly data = computed(() => this.result.value() ?? []);
+  readonly pageNumber = signal<number>(1);
+  readonly pageSize = signal<number>(23);
+  readonly result = httpResource<Student[]>(() => `/sc/students?pageNumber=${this.pageNumber()}&pageSize=${this.pageSize()}`);
+  readonly orjData = computed(() => this.result.value() ?? []);
+  readonly data = signal<Student[]>([]);
   readonly loading = linkedSignal(() => this.result.isLoading());
   readonly imageMainUrl = signal<string>(imageMainUrl);
   readonly loadingList = signal<number[]>([1,2,3,4,5,6,7,8]);
@@ -29,7 +33,13 @@ export default class Students {
 
   //metotlar
   constructor() {
-    this.#breadcrumb.first('Öğrenciler', 'bi-people', '/students')
+    this.#breadcrumb.first('Öğrenciler', 'bi-people', '/students');
+
+    effect(() => {
+      if(this.orjData().length > 0){
+        this.data.update(prev => [...prev, ...this.orjData()]);
+      }
+    })
   }
 
   delete(val: Student) {
@@ -41,5 +51,9 @@ export default class Students {
         this.loading.set(false);
       },() => this.loading.set(false));
     });
+  }
+
+   onScroll() {
+    this.pageNumber.update(prev => prev + 1);
   }
 }
