@@ -16,6 +16,7 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "flexi-grid": "^20.0.7",
     "flexi-toast": "^20.0.3",
     "ngx-infinite-scroll": "^20.0.0",
     "ngx-mask": "^20.0.3",

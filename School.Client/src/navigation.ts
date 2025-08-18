@@ -14,5 +14,10 @@ export const navigations: Navigation[] = [
         name: 'Öğrenciler',
         route: '/students',
         icon: 'bi-people'
+    },
+    {
+        name: 'Sınıflar',
+        route: '/class-rooms',
+        icon: 'bi-buildings'
     }
 ]
