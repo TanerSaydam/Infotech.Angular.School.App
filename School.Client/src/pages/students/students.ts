@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, linkedSignal, signal, viewChild, ViewEncapsulation } from '@angular/core';
 import { BreadcrumbService } from '../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
 import { Student } from '../../models/student';
@@ -8,6 +8,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { FlexiToastService } from 'flexi-toast';
 import { HttpService } from '../../services/http';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
 @Component({
   imports: [RouterLink, NgxMaskPipe, InfiniteScrollDirective],
@@ -15,16 +16,19 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class Students {
+export default class Students implements AfterViewInit {
   //değişkenler
   readonly pageNumber = signal<number>(1);
-  readonly pageSize = signal<number>(23);
-  readonly result = httpResource<Student[]>(() => `/sc/students?pageNumber=${this.pageNumber()}&pageSize=${this.pageSize()}`);
+  readonly pageSize = signal<number>(24);
+  readonly search = signal<string>("");
+  readonly result = httpResource<Student[]>(() => `/sc/students?pageNumber=${this.pageNumber()}&pageSize=${this.pageSize()}&search=${this.search()}`);
   readonly orjData = computed(() => this.result.value() ?? []);
   readonly data = signal<Student[]>([]);
   readonly loading = linkedSignal(() => this.result.isLoading());
   readonly imageMainUrl = signal<string>(imageMainUrl);
-  readonly loadingList = signal<number[]>([1,2,3,4,5,6,7,8]);
+  readonly loadingList = signal<number[]>([1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8]);
+
+  readonly searchInput = viewChild<ElementRef<HTMLInputElement>>("searchInput");
 
   //servisler
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -42,6 +46,10 @@ export default class Students {
     })
   }
 
+  ngAfterViewInit(): void {
+    this.onsearch();
+  }
+
   delete(val: Student) {
     const question = `Öğrenci ${val.firstName} ${val.lastName} silmek istiyor musunuz?`;
     this.#toast.showSwal("Öğrenci Sil?", question, "Sil", () => {
@@ -55,5 +63,26 @@ export default class Students {
 
    onScroll() {
     this.pageNumber.update(prev => prev + 1);
+  }
+
+  onsearch(){
+    fromEvent(this.searchInput()!.nativeElement, "keyup")
+    .pipe(
+      map((event:any) => event.target.value),
+      debounceTime(1000),
+      distinctUntilChanged()
+    )
+    .subscribe(val => {
+      this.search.set(val);
+      this.pageNumber.set(1);
+      this.data.set([]);
+    })
+  }
+
+  clear(){
+    this.search.set("");
+    this.pageNumber.set(1);
+    this.data.set([]);
+    this.onsearch();
   }
 }

@@ -1,15 +1,25 @@
 <title>EduPanel | Öğrenciler</title>
-<div class="row" infiniteScroll (scrolled)="onScroll()">
+<div class="form-group" style="position: relative;">
+    <i class="fa-solid fa-magnifying-glass" style="position: absolute; top: 12px; left: 15px;"></i>
+    <input
+      #searchInput
+      type="search"
+      class="form-control"
+      style="padding-left: 40px;"
+      placeholder="Aramak için değer girin"
+      (search)="clear()">
+</div>
+<div class="row mb-1" infiniteScroll (scrolled)="onScroll()">
     @if(loading()){
         @for(val of loadingList(); track val){
-            <div class="col-md-3 col-12 mt-2">
+            <div class="col-md-2 col-12 mt-2">
                 <div class="card" style="height: 650px;">
                     <div class="placeholder-glow card-header d-flex justify-content-center gap-1">
                         <div style="width: 35px; height: 35px; border-radius: 5px;" class="placeholder"></div>
                         <div style="width: 35px; height: 35px; border-radius: 5px;" class="placeholder"></div>
                     </div>
                     <div class="placeholder-glow card-body d-flex w-100 justify-content-center align-items-center">
-                        <img class="placeholder" style="width: 400px; height: 400px; object-fit: cover; border-radius: 400px;" >
+                        <img class="placeholder" style="width: 400px; height: 400px; object-fit: contain; border-radius: 400px;" >
                     </div>
                     <div class="placeholder-glow card-header d-flex flex-column w-100 justify-content-center align-items-center">
                         <h2 class="placeholder col-5"></h2>
@@ -20,7 +30,7 @@
             </div>
         }
     }@else {
-        <div class="col-md-3 col-12 mt-2">
+        <div class="col-md-2 col-12 mt-2">
             <div class="card">
                 <div class="card-header w-100 d-flex justify-content-center align-items-center" style="height: 650px;">
                     <button class="btn btn-secondary" style="width: 100px; height: 100px;" routerLink="create">
@@ -32,7 +42,7 @@
     }
 
     @for(val of data(); track val.id){
-        <div class="col-md-3 col-12 mt-2">
+        <div class="col-md-2 col-12 mt-2">
             <div class="card" style="height: 650px;">
                 <div class="card-header d-flex justify-content-center gap-1">
                     <button class="btn btn-primary" title="Güncelle" [routerLink]="['edit', val.id]">
@@ -43,9 +53,9 @@
                     </button>
                 </div>
 
-                <div class="card-body d-flex w-100 justify-content-center align-items-center">
+                <div class="card-body d-flex w-100 justify-content-center align-items-center" style="max-width: 400px; width: 100%; height: 100%; object-fit: contain;">
                     <img src="{{imageMainUrl()}}/{{val.imageUrl}}"
-                        style="width: 400px; height: 400px; object-fit: cover; border-radius: 400px;">
+                        style="border-radius: 500px; width: 100%;">
                 </div>
                 <div class="card-header d-flex flex-column w-100 justify-content-center align-items-center">
                     <h2>{{val.firstName}} {{val.lastName}}</h2>

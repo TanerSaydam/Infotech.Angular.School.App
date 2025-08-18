@@ -13,11 +13,12 @@ public sealed class StudentModule : IEndpoint
         var app = builder.MapGroup("/students").WithTags("Students");
 
         app.MapGet(string.Empty,
-            async (int pageNumer, int pageSize, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
+            async (int pageNumber, int pageSize, string search, ApplicationDbContext dbContext, CancellationToken cancellationToken) =>
         {
             var res = await dbContext.Students
+                        .Where(p => (p.FirstName + " " + p.LastName).ToLower().Contains(search.ToLower()))
                         .OrderBy(p => p.FirstName)
-                        .Skip(pageNumer - 1)
+                        .Skip(pageNumber - 1)
                         .Take(pageSize)
                         .ToListAsync(cancellationToken);
             return res;
