@@ -20,6 +20,10 @@ export const routes: Routes = [
             {
                 path: 'class-rooms',
                 loadChildren: () => import('./pages/class-rooms/router')
+            },
+            {
+                path: 'lessons',
+                loadChildren: () => import('./pages/lessons/router')
             }
         ]
     }

@@ -1,0 +1,79 @@
+<title>EduPanel | Dersler</title>
+<div class="row">
+    <div class="col-md-4 col-12">
+        <flexi-grid
+        [data]="data()"
+        [loading]="loading()"
+        language="tr"
+        [showIndex]="true"
+        [showCaption]="true"
+        captionTitle="Ders Listesi"
+        >
+            <ng-template flexiGridCaptionCommandTemplate let-item>
+                <flexi-button
+                  btnColor="primary"
+                  btnIcon="add"
+                  title="Ekle"
+                  flexiTooltip
+                  data-bs-toggle="modal"
+                  data-bs-target="#addModal" />
+            </ng-template>
+
+            <flexi-grid-column field="name" title="Ders Adı" width="350px" />
+
+            <ng-template flexiGridColumnCommandTemplate let-item>
+                <flexi-button
+                  btnColor="primary"
+                  btnIcon="edit"
+                  title="Güncelle"
+                  flexiTooltip
+                  data-bs-toggle="modal"
+                  data-bs-target="#updateModal"
+                  (click)="edit(item.id)" />
+                <flexi-button btnColor="danger" btnIcon="delete" title="Sil" flexiTooltip (click)="delete(item.id)" />
+            </ng-template>
+        </flexi-grid>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Ders Ekleme Formu</h1>
+        <button #addModalCloseBtn type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label>Ders Adı</label>
+            <input class="form-control" name="name" [(ngModel)]="addData().name" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Ders Güncelleme Formu</h1>
+        <button #updateModalCloseBtn type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label>Ders Adı</label>
+            <input class="form-control" name="name" [(ngModel)]="updateData().name" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-info" (click)="update()">Güncelle</button>
+      </div>
+    </div>
+  </div>
+</div>

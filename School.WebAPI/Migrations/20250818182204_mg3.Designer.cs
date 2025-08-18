@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using School.WebAPI.Context;
@@ -11,9 +12,11 @@ using School.WebAPI.Context;
 namespace School.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250818182204_mg3")]
+    partial class mg3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,38 +102,6 @@ namespace School.WebAPI.Migrations
                         .HasName("pk_students");
 
                     b.ToTable("students", (string)null);
-                });
-
-            modelBuilder.Entity("School.WebAPI.Models.ClassRoom", b =>
-                {
-                    b.OwnsMany("School.WebAPI.Models.ClassRoomLesson", "Lessons", b1 =>
-                        {
-                            b1.Property<Guid>("ClassRoomId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("class_room_id");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
-                                .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<Guid>("LessonId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("lesson_id");
-
-                            b1.HasKey("ClassRoomId", "Id")
-                                .HasName("pk_class_room_lesson");
-
-                            b1.ToTable("class_room_lesson", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("ClassRoomId")
-                                .HasConstraintName("fk_class_room_lesson_class_rooms_class_room_id");
-                        });
-
-                    b.Navigation("Lessons");
                 });
 #pragma warning restore 612, 618
         }
